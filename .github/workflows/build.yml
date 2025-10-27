@@ -20,22 +20,22 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Install Android SDK
+      - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
           api-level: 34
           build-tools: 34.0.0
 
-      - name: Install Gradle 8.6
+      - name: Install Gradle 8.8
         run: |
-          curl -sLO https://services.gradle.org/distributions/gradle-8.6-bin.zip
-          unzip -q gradle-8.6-bin.zip -d $HOME/gradle
-          export PATH=$HOME/gradle/gradle-8.6/bin:$PATH
+          curl -sLO https://services.gradle.org/distributions/gradle-8.8-bin.zip
+          unzip -q gradle-8.8-bin.zip -d $HOME/gradle
+          export PATH=$HOME/gradle/gradle-8.8/bin:$PATH
           gradle --version
 
       - name: Build Debug APK
         run: |
-          export PATH=$HOME/gradle/gradle-8.6/bin:$PATH
+          export PATH=$HOME/gradle/gradle-8.8/bin:$PATH
           gradle assembleDebug --no-daemon
 
       - name: Upload APK artifact
