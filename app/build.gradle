@@ -38,12 +38,12 @@ android {
             python.srcDir "src/main/python"
         }
     }
-}
 
-python {
-    pip {
-        install "yt-dlp"
-        install "requests"
+    python {
+        pip {
+            install "yt-dlp"
+            install "requests"
+        }
     }
 }
 
