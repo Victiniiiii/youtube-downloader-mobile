@@ -1,7 +1,7 @@
 plugins {
     id "com.android.application"
     id "com.chaquo.python"
-    id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlin.android" version "1.9.0"
 }
 
 android {
