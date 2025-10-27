@@ -34,7 +34,9 @@ jobs:
           gradle --version
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug || gradle assembleDebug
+        run: |
+          export PATH=$HOME/gradle/gradle-8.6/bin:$PATH
+          gradle assembleDebug --no-daemon
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
