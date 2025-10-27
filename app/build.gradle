@@ -1,0 +1,44 @@
+plugins {
+    id "com.android.application"
+    id "com.chaquo.python"
+    id "org.jetbrains.kotlin.android"
+}
+
+android {
+    namespace "com.Victiniiiii.ytdownloader"
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.Victiniiiii.ytdownloader"
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+        }
+    }
+
+    sourceSets {
+        main {
+            python.srcDir "src/main/python"
+        }
+    }
+}
+
+python {
+    pip {
+        install "yt-dlp"
+        install "requests"
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:1.13.1"
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation "com.google.android.material:material:1.12.0"
+}

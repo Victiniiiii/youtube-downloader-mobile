@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">YouTube Downloader</string>
+    <string name="download_button">Download</string>
+</resources>
