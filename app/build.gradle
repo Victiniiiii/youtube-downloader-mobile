@@ -5,7 +5,7 @@ plugins {
 }
 
 def wheelFilename = file("src/main/python/yt_dlp_filename.txt").text.trim()
-def wheelFile = "../${wheelFilename}"
+def wheelFile = "../../${wheelFilename}"
 
 android {
     namespace "com.Victiniiiii.ytdownloader"
