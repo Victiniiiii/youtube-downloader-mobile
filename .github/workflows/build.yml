@@ -2,7 +2,7 @@ name: Build and Release Android APK
 
 on:
     push:
-        branches: [ "main" ]
+        branches: ["main"]
 
 permissions:
     contents: write
@@ -37,11 +37,13 @@ jobs:
                   echo "$HOME/gradle/gradle-8.8/bin" >> $GITHUB_PATH
                   gradle --version
 
-            - name: Download latest yt-dlp wheel
+            - name: Download latest yt-dlp wheel and create symlink
               run: |
                   mkdir -p app/src/main/python
-                  LATEST_URL=$(curl -s https://pypi.org/pypi/yt-dlp/json | jq -r '.urls[] | select(.filename | endswith(".whl")) | .url' | head -n 1)
-                  wget -O app/src/main/python/yt-dlp-latest.whl "$LATEST_URL"
+                  WHEEL_URL=$(curl -s https://pypi.org/pypi/yt-dlp/json | jq -r '.urls[] | select(.filename | endswith(".whl")) | .url' | head -n 1)
+                  FILENAME=$(basename "$WHEEL_URL")
+                  wget -O "app/src/main/python/$FILENAME" "$WHEEL_URL"
+                  ln -sf "$FILENAME" app/src/main/python/yt-dlp-latest.whl
 
             - name: Build Debug APK
               run: |
