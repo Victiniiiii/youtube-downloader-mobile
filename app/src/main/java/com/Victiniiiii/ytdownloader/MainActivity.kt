@@ -5,10 +5,22 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import android.widget.TextView
+import android.view.View
+import android.widget.ProgressBar
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var urlInput: EditText
+    private lateinit var downloadBtn: Button
+    private lateinit var updateBtn: Button
+    private lateinit var audioSwitch: SwitchMaterial
+    private lateinit var statusText: TextView
+    private lateinit var versionText: TextView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,8 +33,26 @@ class MainActivity : AppCompatActivity() {
         val py = Python.getInstance()
         val downloader = py.getModule("downloader")
 
-        val urlInput = findViewById<EditText>(R.id.urlInput)
-        val downloadBtn = findViewById<Button>(R.id.downloadBtn)
+        urlInput = findViewById(R.id.urlInput)
+        downloadBtn = findViewById(R.id.downloadBtn)
+        updateBtn = findViewById(R.id.updateBtn)
+        audioSwitch = findViewById(R.id.audioSwitch)
+        statusText = findViewById(R.id.statusText)
+        versionText = findViewById(R.id.versionText)
+        progressBar = findViewById(R.id.progressBar)
+
+        Thread {
+            try {
+                val version = downloader.callAttr("get_ytdlp_version").toString()
+                runOnUiThread {
+                    versionText.text = "yt-dlp version: $version"
+                }
+            } catch (e: Exception) {
+                runOnUiThread {
+                    versionText.text = "yt-dlp version: Unknown"
+                }
+            }
+        }.start()
 
         downloadBtn.setOnClickListener {
             val url = urlInput.text.toString().trim()
@@ -31,15 +61,69 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            val downloadAudio = audioSwitch.isChecked
+            
+            progressBar.visibility = View.VISIBLE
+            downloadBtn.isEnabled = false
+            statusText.text = if (downloadAudio) "Downloading audio..." else "Downloading video..."
+            statusText.visibility = View.VISIBLE
+
             Thread {
                 try {
-                    downloader.callAttr("download_video", url)
+                    val result = downloader.callAttr("download_video", url, downloadAudio).toString()
                     runOnUiThread {
-                        Toast.makeText(this, "Download complete", Toast.LENGTH_SHORT).show()
+                        progressBar.visibility = View.GONE
+                        downloadBtn.isEnabled = true
+                        statusText.text = result
+                        
+                        if (result.startsWith("Downloaded:")) {
+                            Toast.makeText(this, "Download complete!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, result, Toast.LENGTH_LONG).show()
+                        }
                     }
                 } catch (e: Exception) {
                     runOnUiThread {
+                        progressBar.visibility = View.GONE
+                        downloadBtn.isEnabled = true
+                        statusText.text = "Error: ${e.message}"
                         Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }.start()
+        }
+
+        updateBtn.setOnClickListener {
+            progressBar.visibility = View.VISIBLE
+            updateBtn.isEnabled = false
+            statusText.text = "Updating yt-dlp..."
+            statusText.visibility = View.VISIBLE
+
+            Thread {
+                try {
+                    val result = downloader.callAttr("update_ytdlp").toString()
+                    runOnUiThread {
+                        progressBar.visibility = View.GONE
+                        updateBtn.isEnabled = true
+                        statusText.text = result
+                        Toast.makeText(this, result, Toast.LENGTH_LONG).show()
+                        
+                        Thread {
+                            try {
+                                val version = downloader.callAttr("get_ytdlp_version").toString()
+                                runOnUiThread {
+                                    versionText.text = "yt-dlp version: $version"
+                                }
+                            } catch (e: Exception) {
+                            }
+                        }.start()
+                    }
+                } catch (e: Exception) {
+                    runOnUiThread {
+                        progressBar.visibility = View.GONE
+                        updateBtn.isEnabled = true
+                        statusText.text = "Update error: ${e.message}"
+                        Toast.makeText(this, "Update error: ${e.message}", Toast.LENGTH_LONG).show()
                     }
                 }
             }.start()

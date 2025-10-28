@@ -1,15 +1,63 @@
 import yt_dlp
 import os
+import subprocess
+import sys
 
-def download_video(url):
-    downloads_path = os.path.join("/sdcard/Download")
+def download_video(url, download_audio=False):
+    downloads_path = "/sdcard/Download"
     os.makedirs(downloads_path, exist_ok=True)
 
-    ydl_opts = {
-        "outtmpl": os.path.join(downloads_path, "%(title)s.%(ext)s"),
-        "format": "mp4",
-        "quiet": True,
-    }
+    if download_audio:
+        ydl_opts = {
+            "outtmpl": os.path.join(downloads_path, "%(title)s.%(ext)s"),
+            "format": "bestaudio[ext=m4a]/bestaudio[ext=aac]/bestaudio",
+            "quiet": False,
+            "no_warnings": False,
+            "extract_audio": False,
+            "prefer_free_formats": False,
+        }
+    else:
+        ydl_opts = {
+            "outtmpl": os.path.join(downloads_path, "%(title)s.%(ext)s"),
+            "format": "best[ext=mp4]/best",
+            "quiet": False,
+            "no_warnings": False,
+        }
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=True)
+            if info:
+                filename = ydl.prepare_filename(info)
+                if os.path.exists(filename) and os.path.getsize(filename) > 0:
+                    return f"Downloaded: {os.path.basename(filename)}"
+                else:
+                    return "Error: Downloaded file is empty or does not exist"
+            return "Error: Could not extract video information"
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+
+def update_ytdlp():
+    try:
+        result = subprocess.run(
+            [sys.executable, "-m", "pip", "install", "--upgrade", "yt-dlp"],
+            capture_output=True,
+            text=True
+        )
+        
+        if result.returncode == 0:
+            import importlib
+            importlib.reload(yt_dlp)
+            return f"yt-dlp updated successfully to version {yt_dlp.version.__version__}"
+        else:
+            return f"Update failed: {result.stderr}"
+    except Exception as e:
+        return f"Update error: {str(e)}"
+
+
+def get_ytdlp_version():
+    try:
+        return yt_dlp.version.__version__
+    except:
+        return "Unknown"
