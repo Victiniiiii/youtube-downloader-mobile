@@ -18,6 +18,13 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
         }
+
+        python {
+            pip {
+                install "--upgrade" "yt-dlp"
+                install "requests"
+            }
+        }
     }
 
     buildTypes {
@@ -39,15 +46,6 @@ android {
     sourceSets {
         main {
             python.srcDir "src/main/python"
-        }
-    }
-}
-
-chaquopy {
-    defaultConfig {
-        pip {
-            install "--upgrade" "yt-dlp"
-            install "requests"
         }
     }
 }
