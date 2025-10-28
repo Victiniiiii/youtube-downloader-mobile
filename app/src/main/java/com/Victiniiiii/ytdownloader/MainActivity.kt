@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var urlInput: EditText
     private lateinit var downloadBtn: Button
-    private lateinit var updateBtn: Button
     private lateinit var audioSwitch: SwitchMaterial
     private lateinit var statusText: TextView
     private lateinit var versionText: TextView
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         urlInput = findViewById(R.id.urlInput)
         downloadBtn = findViewById(R.id.downloadBtn)
-        updateBtn = findViewById(R.id.updateBtn)
         audioSwitch = findViewById(R.id.audioSwitch)
         statusText = findViewById(R.id.statusText)
         versionText = findViewById(R.id.versionText)
@@ -88,42 +86,6 @@ class MainActivity : AppCompatActivity() {
                         downloadBtn.isEnabled = true
                         statusText.text = "Error: ${e.message}"
                         Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }.start()
-        }
-
-        updateBtn.setOnClickListener {
-            progressBar.visibility = View.VISIBLE
-            updateBtn.isEnabled = false
-            statusText.text = "Updating yt-dlp..."
-            statusText.visibility = View.VISIBLE
-
-            Thread {
-                try {
-                    val result = downloader.callAttr("update_ytdlp").toString()
-                    runOnUiThread {
-                        progressBar.visibility = View.GONE
-                        updateBtn.isEnabled = true
-                        statusText.text = result
-                        Toast.makeText(this, result, Toast.LENGTH_LONG).show()
-                        
-                        Thread {
-                            try {
-                                val version = downloader.callAttr("get_ytdlp_version").toString()
-                                runOnUiThread {
-                                    versionText.text = "yt-dlp version: $version"
-                                }
-                            } catch (e: Exception) {
-                            }
-                        }.start()
-                    }
-                } catch (e: Exception) {
-                    runOnUiThread {
-                        progressBar.visibility = View.GONE
-                        updateBtn.isEnabled = true
-                        statusText.text = "Update error: ${e.message}"
-                        Toast.makeText(this, "Update error: ${e.message}", Toast.LENGTH_LONG).show()
                     }
                 }
             }.start()

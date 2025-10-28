@@ -38,24 +38,6 @@ def download_video(url, download_audio=False):
         return f"Error: {str(e)}"
 
 
-def update_ytdlp():
-    try:
-        result = subprocess.run(
-            [sys.executable, "-m", "pip", "install", "--upgrade", "yt-dlp"],
-            capture_output=True,
-            text=True
-        )
-        
-        if result.returncode == 0:
-            import importlib
-            importlib.reload(yt_dlp)
-            return f"yt-dlp updated successfully to version {yt_dlp.version.__version__}"
-        else:
-            return f"Update failed: {result.stderr}"
-    except Exception as e:
-        return f"Update error: {str(e)}"
-
-
 def get_ytdlp_version():
     try:
         return yt_dlp.version.__version__

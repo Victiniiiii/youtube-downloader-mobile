@@ -114,20 +114,6 @@
                     android:layout_marginTop="16dp"
                     android:elevation="4dp" />
 
-                <Button
-                    android:id="@+id/updateBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:text="Update yt-dlp"
-                    android:textSize="14sp"
-                    android:backgroundTint="#2A2A2A"
-                    android:textColor="#BB86FC"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#BB86FC"
-                    app:strokeWidth="1dp"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_marginTop="12dp" />
-
                 <ProgressBar
                     android:id="@+id/progressBar"
                     android:layout_width="match_parent"
@@ -178,7 +164,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Files save to /sdcard/Download\n• Audio format: M4A or AAC\n• Video format: MP4\n• Update yt-dlp regularly for best results"
+                    android:text="• Files save to /sdcard/Download\n• Audio format: M4A or AAC\n• Video format: MP4"
                     android:textColor="#B0B0B0"
                     android:textSize="12sp"
                     android:lineSpacingExtra="4dp" />

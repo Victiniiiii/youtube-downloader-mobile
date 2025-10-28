@@ -46,7 +46,7 @@ android {
 chaquopy {
     defaultConfig {
         pip {
-            install "yt-dlp"
+            install "--upgrade" "yt-dlp"
             install "requests"
         }
     }
