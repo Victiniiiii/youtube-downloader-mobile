@@ -19,8 +19,8 @@ android {
         }
         python {
             pip {
-                install "yt-dlp"
                 install "requests"
+                install file("src/main/python/yt-dlp-latest.whl")
             }
         }
     }
