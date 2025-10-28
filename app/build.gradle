@@ -19,7 +19,7 @@ android {
         }
         python {
             pip {
-                install "--upgrade", "yt-dlp"
+                install "yt-dlp --upgrade"
                 install "requests"
             }
         }
