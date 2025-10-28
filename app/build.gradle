@@ -19,7 +19,7 @@ android {
         }
         python {
             pip {
-                install "yt-dlp==2025.10.22"
+                install "yt-dlp"
                 install "requests"
             }
         }
