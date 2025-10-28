@@ -4,6 +4,8 @@ plugins {
     id 'com.chaquo.python'
 }
 
+def wheelFile = file("src/main/python/yt_dlp_filename.txt").text.trim()
+
 android {
     namespace "com.Victiniiiii.ytdownloader"
     compileSdk 34
@@ -20,7 +22,7 @@ android {
         python {
             pip {
                 install "requests"
-                install "yt-dlp-latest.whl"
+                install wheelFile
             }
         }
     }
