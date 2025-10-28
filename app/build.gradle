@@ -20,7 +20,7 @@ android {
         python {
             pip {
                 install "requests"
-                install file("src/main/python/yt-dlp-latest.whl")
+                install "yt-dlp-latest.whl"
             }
         }
     }
