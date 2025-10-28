@@ -43,7 +43,7 @@ jobs:
                     WHEEL_URL=$(curl -s https://pypi.org/pypi/yt-dlp/json | jq -r '.urls[] | select(.filename | endswith(".whl")) | .url' | head -n 1)
                     FILENAME=$(basename "$WHEEL_URL")
                     wget -O "app/$FILENAME" "$WHEEL_URL"
-                    echo "$FILENAME" > app/src/main/python/yt_dlp_filename.txt
+                    echo "../$FILENAME" > app/src/main/python/yt_dlp_filename.txt
 
             - name: Build Debug APK
               run: |
