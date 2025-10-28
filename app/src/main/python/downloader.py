@@ -1,8 +1,6 @@
 import os
 import subprocess
 import sys
-
-subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "yt-dlp"])
 import yt_dlp
 
 def download_video(url, download_audio=False):
