@@ -4,7 +4,8 @@ plugins {
     id 'com.chaquo.python'
 }
 
-def wheelFile = file("src/main/python/yt_dlp_filename.txt").text.trim()
+def wheelFilename = file("src/main/python/yt_dlp_filename.txt").text.trim()
+def wheelFile = "../${wheelFilename}"
 
 android {
     namespace "com.Victiniiiii.ytdownloader"
