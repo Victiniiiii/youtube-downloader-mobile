@@ -1,7 +1,10 @@
 import os
-import subprocess
-import sys
 import yt_dlp
+
+try:
+    yt_dlp_version = yt_dlp.version.__version__
+except Exception as e:
+    yt_dlp_version = f"Error: {str(e)}"
 
 def download_video(url, download_audio=False):
     downloads_path = "/sdcard/Download"
@@ -39,7 +42,4 @@ def download_video(url, download_audio=False):
 
 
 def get_ytdlp_version():
-    try:
-        return yt_dlp.version.__version__
-    except:
-        return "Unknown"
+    return yt_dlp_version

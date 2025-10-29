@@ -25,8 +25,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (!Python.isStarted()) {
-            Python.start(AndroidPlatform(this))
+        try {
+            if (!Python.isStarted()) {
+                Python.start(AndroidPlatform(this))
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error initializing Python: ${e.message}", Toast.LENGTH_LONG).show()
+            return
         }
 
         val py = Python.getInstance()

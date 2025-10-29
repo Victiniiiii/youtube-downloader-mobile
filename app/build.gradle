@@ -7,6 +7,10 @@ plugins {
 def wheelFilename = file("src/main/python/yt_dlp_filename.txt").text.trim()
 def wheelFile = file(wheelFilename).absolutePath
 
+if (!file(wheelFile).exists()) {
+    throw new GradleException("The yt-dlp wheel file does not exist at: $wheelFile")
+}
+
 android {
     namespace "com.Victiniiiii.ytdownloader"
     compileSdk 34
