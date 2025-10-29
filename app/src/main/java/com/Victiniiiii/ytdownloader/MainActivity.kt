@@ -21,6 +21,7 @@ import java.io.PrintWriter
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContracts
+import android.provider.Settings
 
 class MainActivity : AppCompatActivity() {
 
@@ -168,7 +169,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAndRequestPermissions() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
-            if (!android.provider.Settings.canManageExternalStorage(this)) {
+            if (!Settings.System.canWrite(this)) {
                 Toast.makeText(this, "Please grant Manage External Storage permission", Toast.LENGTH_LONG).show()
             }
         } else {
