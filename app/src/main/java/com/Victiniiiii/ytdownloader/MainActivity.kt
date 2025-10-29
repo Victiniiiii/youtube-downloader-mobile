@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import android.widget.TextView
-import android.view.View
+import android.widget.Toast
 import android.widget.ProgressBar
-import com.google.android.material.switchmaterial.SwitchMaterial
+import android.view.View
+import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
@@ -51,16 +51,20 @@ class MainActivity : AppCompatActivity() {
                 if (isChecked) {
                     when (checkedId) {
                         R.id.audioModeButton -> {
-                            modeToggleGroup.findViewById<Button>(R.id.audioModeButton)
-                                .setBackgroundColor(getColor(R.color.magenta))
-                            modeToggleGroup.findViewById<Button>(R.id.videoModeButton)
-                                .setBackgroundColor(getColor(R.color.gray))
+                            findViewById<Button>(R.id.audioModeButton).setBackgroundColor(
+                                ContextCompat.getColor(this, android.R.color.holo_red_light)
+                            )
+                            findViewById<Button>(R.id.videoModeButton).setBackgroundColor(
+                                ContextCompat.getColor(this, android.R.color.darker_gray)
+                            )
                         }
                         R.id.videoModeButton -> {
-                            modeToggleGroup.findViewById<Button>(R.id.videoModeButton)
-                                .setBackgroundColor(getColor(R.color.magenta))
-                            modeToggleGroup.findViewById<Button>(R.id.audioModeButton)
-                                .setBackgroundColor(getColor(R.color.gray))
+                            findViewById<Button>(R.id.videoModeButton).setBackgroundColor(
+                                ContextCompat.getColor(this, android.R.color.holo_red_light)
+                            )
+                            findViewById<Button>(R.id.audioModeButton).setBackgroundColor(
+                                ContextCompat.getColor(this, android.R.color.darker_gray)
+                            )
                         }
                     }
                 }
