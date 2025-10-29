@@ -29,15 +29,15 @@ class MainActivity : AppCompatActivity() {
             Python.start(AndroidPlatform(this))
         }
 
-        val py = Python.getInstance()
-        val downloader = py.getModule("downloader")
-
         urlInput = findViewById(R.id.urlInput)
         downloadBtn = findViewById(R.id.downloadBtn)
         audioSwitch = findViewById(R.id.audioSwitch)
         statusText = findViewById(R.id.statusText)
         versionText = findViewById(R.id.versionText)
         progressBar = findViewById(R.id.progressBar)
+
+        val py = Python.getInstance()
+        val downloader = py.getModule("downloader")
 
         Thread {
             try {

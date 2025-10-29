@@ -7,6 +7,7 @@
         android:label="YouTube Downloader"
         android:icon="@mipmap/cutesadkitty"
         android:roundIcon="@mipmap/cutesadkitty"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         <activity
             android:name=".MainActivity"
