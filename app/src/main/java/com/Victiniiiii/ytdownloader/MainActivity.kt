@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var statusText: TextView
     private lateinit var versionText: TextView
     private lateinit var progressBar: ProgressBar
-    private lateinit var supportedSitesText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             statusText = findViewById(R.id.statusText)
             versionText = findViewById(R.id.versionText)
             progressBar = findViewById(R.id.progressBar)
-            supportedSitesText = findViewById(R.id.supportedSitesText)
 
             modeToggleGroup.check(R.id.audioModeButton)
 
