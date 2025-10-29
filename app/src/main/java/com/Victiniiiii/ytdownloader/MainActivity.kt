@@ -29,15 +29,15 @@ class MainActivity : AppCompatActivity() {
             Python.start(AndroidPlatform(this))
         }
 
+        val py = Python.getInstance()
+        val downloader = py.getModule("downloader")
+
         urlInput = findViewById(R.id.urlInput)
         downloadBtn = findViewById(R.id.downloadBtn)
         audioSwitch = findViewById(R.id.audioSwitch)
         statusText = findViewById(R.id.statusText)
         versionText = findViewById(R.id.versionText)
         progressBar = findViewById(R.id.progressBar)
-
-        val py = Python.getInstance()
-        val downloader = py.getModule("downloader")
 
         Thread {
             try {
@@ -68,17 +68,14 @@ class MainActivity : AppCompatActivity() {
 
             Thread {
                 try {
-                    val result = downloader.callAttr("download_video", url, downloadAudio).toString()
+                    PythonBridge.download(url, downloadAudio)
+                    val result = "Download complete!"
                     runOnUiThread {
                         progressBar.visibility = View.GONE
                         downloadBtn.isEnabled = true
                         statusText.text = result
                         
-                        if (result.startsWith("Downloaded:")) {
-                            Toast.makeText(this, "Download complete!", Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(this, result, Toast.LENGTH_LONG).show()
-                        }
+                        Toast.makeText(this, "Download complete!", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {
                     runOnUiThread {
