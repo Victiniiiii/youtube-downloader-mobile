@@ -1,3 +1,2 @@
-- Make youtube playlists work
 - Select the output folder
 - change download button color while disabled

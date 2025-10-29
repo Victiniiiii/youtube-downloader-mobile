@@ -15,4 +15,4 @@ The sites this app supports include:
 -   Facebook
 -   Twitch
 -   Reddit
--   And [Many More](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)
+-   And [many more](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md)

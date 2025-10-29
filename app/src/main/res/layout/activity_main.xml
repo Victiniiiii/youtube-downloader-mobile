@@ -105,7 +105,7 @@
                             android:layout_height="wrap_content"
                             android:text="Audio"
                             android:textColor="#FFFFFF"
-                            app:backgroundTint="#BB86FC" />
+                            app:backgroundTint="#FF4444" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/videoModeButton"
@@ -169,7 +169,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="YouTube\nTikTok\nSoundCloud\nInstagram\nFacebook\nTwitter\nTwitch\nReddit\And many more..."
+                    android:text="YouTube\nTikTok\nSoundCloud\nInstagram\nFacebook\nTwitter\nTwitch\nReddit\nAnd many more..."
                     android:textColor="#B0B0B0"
                     android:textSize="12sp"
                     android:lineSpacingExtra="4dp" />

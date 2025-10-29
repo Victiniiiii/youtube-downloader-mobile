@@ -16,8 +16,6 @@ def download_video(url, download_audio=False):
             "format": "bestaudio[ext=m4a]/bestaudio[ext=aac]/bestaudio",
             "quiet": False,
             "no_warnings": False,
-            "extract_audio": False,
-            "prefer_free_formats": False,
         }
     else:
         ydl_opts = {
@@ -30,13 +28,20 @@ def download_video(url, download_audio=False):
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=True)
-            if info:
+            if "entries" in info:
+                downloaded = []
+                for entry in info["entries"]:
+                    if not entry:
+                        continue
+                    filename = ydl.prepare_filename(entry)
+                    if os.path.exists(filename) and os.path.getsize(filename) > 0:
+                        downloaded.append(os.path.basename(filename))
+                return f"Downloaded {len(downloaded)} items" if downloaded else "No videos downloaded"
+            else:
                 filename = ydl.prepare_filename(info)
                 if os.path.exists(filename) and os.path.getsize(filename) > 0:
                     return f"Downloaded: {os.path.basename(filename)}"
-                else:
-                    return "Error: Downloaded file is empty or does not exist"
-            return "Error: Could not extract video information"
+                return "Error: Downloaded file is empty or does not exist"
     except Exception as e:
         return f"Error: {str(e)}"
 
