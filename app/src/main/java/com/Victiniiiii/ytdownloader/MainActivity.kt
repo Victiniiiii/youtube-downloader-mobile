@@ -49,6 +49,19 @@ class MainActivity : AppCompatActivity() {
 
             modeToggleGroup.check(R.id.audioModeButton)
 
+            modeToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
+                if (isChecked) {
+                    when (checkedId) {
+                        R.id.audioModeButton -> {
+                            statusText.text = "Mode: Audio"
+                        }
+                        R.id.videoModeButton -> {
+                            statusText.text = "Mode: Video"
+                        }
+                    }
+                }
+            }
+
             Thread {
                 try {
                     val version = downloader.callAttr("get_ytdlp_version").toString()
@@ -97,19 +110,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }.start()
             }
-
-            Thread {
-                try {
-                    val supportedSites = PythonBridge.getSupportedSites()
-                    runOnUiThread {
-                        supportedSitesText.text = supportedSites
-                    }
-                } catch (e: Exception) {
-                    runOnUiThread {
-                        supportedSitesText.text = "Error loading supported sites."
-                    }
-                }
-            }.start()
         } catch (e: Exception) {
             logErrorToFile(e)
             Toast.makeText(this, "App crashed. Check log file in /sdcard/Download.", Toast.LENGTH_LONG).show()

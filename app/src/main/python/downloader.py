@@ -43,17 +43,3 @@ def download_video(url, download_audio=False):
 
 def get_ytdlp_version():
     return yt_dlp_version
-
-
-def get_supported_sites():
-    popular_sites = [
-        "YouTube",
-        "TikTok",
-        "SoundCloud",
-        "Instagram",
-        "Facebook",
-        "Twitter",
-        "Twitch",
-        "Reddit",
-    ]
-    return "\n".join(popular_sites)

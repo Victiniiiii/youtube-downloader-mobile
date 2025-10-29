@@ -1,2 +1,2 @@
-make sure everything works  
-make readme good  
+- Make playlists work
+- Select the output folder

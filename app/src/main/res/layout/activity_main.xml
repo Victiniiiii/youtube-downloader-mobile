@@ -88,7 +88,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Download Mode"
+                        android:text="Mode"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
                         android:layout_marginStart="12dp" />
@@ -115,40 +115,6 @@
                             android:textColor="#FFFFFF"
                             app:backgroundTint="#4A4A4A" />
                     </com.google.android.material.button.MaterialButtonToggleGroup>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="#2A2A2A"
-                    android:padding="16dp"
-                    android:elevation="2dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@android:drawable/ic_lock_silent_mode_off"
-                        android:tint="#BB86FC" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Download Audio Only"
-                        android:textColor="#FFFFFF"
-                        android:textSize="16sp"
-                        android:layout_marginStart="12dp" />
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/audioSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:thumbTint="#BB86FC"
-                        app:trackTint="#4A4A4A" />
                 </LinearLayout>
 
                 <Button
@@ -205,17 +171,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="🌐 Supported Sites"
+                    android:text="🌐 Supported Popular Sites"
                     android:textColor="#BB86FC"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
-                    android:id="@+id/supportedSitesText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Loading supported sites..."
+                    android:text="YouTube\nTikTok\nSoundCloud\nInstagram\nFacebook\nTwitter\nTwitch\nReddit\And many more..."
                     android:textColor="#B0B0B0"
                     android:textSize="12sp"
                     android:lineSpacingExtra="4dp" />
