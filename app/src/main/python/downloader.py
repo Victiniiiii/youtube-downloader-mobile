@@ -6,20 +6,19 @@ try:
 except Exception as e:
     yt_dlp_version = f"Error: {str(e)}"
 
-def download_video(url, download_audio=False):
-    downloads_path = "/sdcard/Download"
-    os.makedirs(downloads_path, exist_ok=True)
+def download_video(url, download_audio=False, folder="/sdcard/Download"):
+    os.makedirs(folder, exist_ok=True)
 
     if download_audio:
         ydl_opts = {
-            "outtmpl": os.path.join(downloads_path, "%(title)s.%(ext)s"),
+            "outtmpl": os.path.join(folder, "%(title)s.%(ext)s"),
             "format": "bestaudio[ext=m4a]/bestaudio[ext=aac]/bestaudio",
             "quiet": False,
             "no_warnings": False,
         }
     else:
         ydl_opts = {
-            "outtmpl": os.path.join(downloads_path, "%(title)s.%(ext)s"),
+            "outtmpl": os.path.join(folder, "%(title)s.%(ext)s"),
             "format": "best[ext=mp4]/best",
             "quiet": False,
             "no_warnings": False,

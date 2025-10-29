@@ -140,6 +140,17 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:indeterminate="true" />
 
+                <Button
+                    android:id="@+id/selectFolderBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Select Download Folder"
+                    android:textSize="16sp"
+                    android:layout_marginTop="16dp"
+                    android:backgroundTint="#4CAF50"
+                    android:textColor="#FFFFFF"
+                    android:elevation="4dp" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -175,17 +186,5 @@
                     android:lineSpacingExtra="4dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/statusText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#B0B0B0"
-            android:textSize="14sp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:visibility="gone" />
-
     </LinearLayout>
 </ScrollView>

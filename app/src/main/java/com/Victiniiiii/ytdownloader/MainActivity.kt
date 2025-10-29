@@ -15,13 +15,16 @@ import com.chaquo.python.android.AndroidPlatform
 import java.io.File
 import java.io.FileWriter
 import java.io.PrintWriter
+import android.content.Intent
+import android.net.Uri
+import androidx.activity.result.contract.ActivityResultContracts
 
 class MainActivity : AppCompatActivity() {
 
+    private var downloadFolder: String = "/sdcard/Download"
     private lateinit var urlInput: EditText
     private lateinit var downloadBtn: Button
     private lateinit var modeToggleGroup: MaterialButtonToggleGroup
-    private lateinit var statusText: TextView
     private lateinit var versionText: TextView
     private lateinit var progressBar: ProgressBar
 
@@ -41,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             urlInput = findViewById(R.id.urlInput)
             downloadBtn = findViewById(R.id.downloadBtn)
             modeToggleGroup = findViewById(R.id.modeToggleGroup)
-            statusText = findViewById(R.id.statusText)
             versionText = findViewById(R.id.versionText)
             progressBar = findViewById(R.id.progressBar)
 
@@ -83,6 +85,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }.start()
 
+            val selectFolderBtn: Button = findViewById(R.id.selectFolderBtn)
+            selectFolderBtn.setOnClickListener {
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                folderPickerLauncher.launch(intent)
+            }
+
             downloadBtn.setOnClickListener {
                 val url = urlInput.text.toString().trim()
                 if (url.isEmpty()) {
@@ -94,25 +102,22 @@ class MainActivity : AppCompatActivity() {
 
                 progressBar.visibility = View.VISIBLE
                 downloadBtn.isEnabled = false
-                statusText.text = if (downloadAudio) "Downloading audio..." else "Downloading video..."
-                statusText.visibility = View.VISIBLE
+                downloadBtn.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
 
                 Thread {
                     try {
-                        PythonBridge.download(url, downloadAudio)
-                        val result = "Download complete!"
+                        PythonBridge.download(url, downloadAudio, downloadFolder)
                         runOnUiThread {
                             progressBar.visibility = View.GONE
                             downloadBtn.isEnabled = true
-                            statusText.text = result
-
+                            downloadBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_500))
                             Toast.makeText(this, "Download complete!", Toast.LENGTH_SHORT).show()
                         }
                     } catch (e: Exception) {
                         runOnUiThread {
                             progressBar.visibility = View.GONE
                             downloadBtn.isEnabled = true
-                            statusText.text = "Error: ${e.message}"
+                            downloadBtn.setBackgroundColor(ContextCompat.getColor(this, R.color.purple_500))
                             Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
                         }
                     }
@@ -122,6 +127,17 @@ class MainActivity : AppCompatActivity() {
             logErrorToFile(e)
             Toast.makeText(this, "App crashed. Check log file in /sdcard/Download.", Toast.LENGTH_LONG).show()
             finish()
+        }
+    }
+
+    private val folderPickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val uri: Uri? = result.data?.data
+            if (uri != null) {
+                val path = uri.path ?: return@registerForActivityResult
+                downloadFolder = path.replace("/tree/primary:", "/sdcard/")
+                Toast.makeText(this, "Folder selected: $downloadFolder", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
