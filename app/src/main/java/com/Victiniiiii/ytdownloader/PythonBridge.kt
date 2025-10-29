@@ -9,4 +9,8 @@ object PythonBridge {
     fun download(url: String, downloadAudio: Boolean) {
         downloader.callAttr("download_video", url, downloadAudio)
     }
+
+    fun getSupportedSites(): String {
+        return downloader.callAttr("get_supported_sites").toString()
+    }
 }

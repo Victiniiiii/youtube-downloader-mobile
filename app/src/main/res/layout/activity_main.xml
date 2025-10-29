@@ -88,6 +88,56 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:text="Download Mode"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:layout_marginStart="12dp" />
+
+                    <com.google.android.material.button.MaterialButtonToggleGroup
+                        android:id="@+id/modeToggleGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/audioModeButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Audio"
+                            android:textColor="#FFFFFF"
+                            app:backgroundTint="#BB86FC" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/videoModeButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Video"
+                            android:textColor="#FFFFFF"
+                            app:backgroundTint="#4A4A4A" />
+                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="#2A2A2A"
+                    android:padding="16dp"
+                    android:elevation="2dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@android:drawable/ic_lock_silent_mode_off"
+                        android:tint="#BB86FC" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:text="Download Audio Only"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
@@ -155,16 +205,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ℹ️ Download Info"
+                    android:text="🌐 Supported Sites"
                     android:textColor="#BB86FC"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
 
                 <TextView
+                    android:id="@+id/supportedSitesText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Files save to /sdcard/Download\n• Audio format: M4A or AAC\n• Video format: MP4"
+                    android:text="Loading supported sites..."
                     android:textColor="#B0B0B0"
                     android:textSize="12sp"
                     android:lineSpacingExtra="4dp" />

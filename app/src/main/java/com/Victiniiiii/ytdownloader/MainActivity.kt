@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.view.View
 import android.widget.ProgressBar
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.button.MaterialButtonToggleGroup
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import java.io.File
@@ -19,10 +20,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var urlInput: EditText
     private lateinit var downloadBtn: Button
-    private lateinit var audioSwitch: SwitchMaterial
+    private lateinit var modeToggleGroup: MaterialButtonToggleGroup
     private lateinit var statusText: TextView
     private lateinit var versionText: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var supportedSitesText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +41,13 @@ class MainActivity : AppCompatActivity() {
 
             urlInput = findViewById(R.id.urlInput)
             downloadBtn = findViewById(R.id.downloadBtn)
-            audioSwitch = findViewById(R.id.audioSwitch)
+            modeToggleGroup = findViewById(R.id.modeToggleGroup)
             statusText = findViewById(R.id.statusText)
             versionText = findViewById(R.id.versionText)
             progressBar = findViewById(R.id.progressBar)
+            supportedSitesText = findViewById(R.id.supportedSitesText)
+
+            modeToggleGroup.check(R.id.audioModeButton)
 
             Thread {
                 try {
@@ -64,8 +69,8 @@ class MainActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                val downloadAudio = audioSwitch.isChecked
-                
+                val downloadAudio = modeToggleGroup.checkedButtonId == R.id.audioModeButton
+
                 progressBar.visibility = View.VISIBLE
                 downloadBtn.isEnabled = false
                 statusText.text = if (downloadAudio) "Downloading audio..." else "Downloading video..."
@@ -79,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                             progressBar.visibility = View.GONE
                             downloadBtn.isEnabled = true
                             statusText.text = result
-                            
+
                             Toast.makeText(this, "Download complete!", Toast.LENGTH_SHORT).show()
                         }
                     } catch (e: Exception) {
@@ -92,6 +97,19 @@ class MainActivity : AppCompatActivity() {
                     }
                 }.start()
             }
+
+            Thread {
+                try {
+                    val supportedSites = PythonBridge.getSupportedSites()
+                    runOnUiThread {
+                        supportedSitesText.text = supportedSites
+                    }
+                } catch (e: Exception) {
+                    runOnUiThread {
+                        supportedSitesText.text = "Error loading supported sites."
+                    }
+                }
+            }.start()
         } catch (e: Exception) {
             logErrorToFile(e)
             Toast.makeText(this, "App crashed. Check log file in /sdcard/Download.", Toast.LENGTH_LONG).show()
