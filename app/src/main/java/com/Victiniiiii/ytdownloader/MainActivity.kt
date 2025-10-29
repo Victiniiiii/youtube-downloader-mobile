@@ -51,10 +51,16 @@ class MainActivity : AppCompatActivity() {
                 if (isChecked) {
                     when (checkedId) {
                         R.id.audioModeButton -> {
-                            statusText.text = "Mode: Audio"
+                            modeToggleGroup.findViewById<Button>(R.id.audioModeButton)
+                                .setBackgroundColor(getColor(R.color.magenta))
+                            modeToggleGroup.findViewById<Button>(R.id.videoModeButton)
+                                .setBackgroundColor(getColor(R.color.gray))
                         }
                         R.id.videoModeButton -> {
-                            statusText.text = "Mode: Video"
+                            modeToggleGroup.findViewById<Button>(R.id.videoModeButton)
+                                .setBackgroundColor(getColor(R.color.magenta))
+                            modeToggleGroup.findViewById<Button>(R.id.audioModeButton)
+                                .setBackgroundColor(getColor(R.color.gray))
                         }
                     }
                 }
