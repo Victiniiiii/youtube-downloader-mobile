@@ -1,5 +1,7 @@
 package com.Victiniiiii.ytdownloader
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -8,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.ProgressBar
 import android.view.View
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.chaquo.python.Python
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var modeToggleGroup: MaterialButtonToggleGroup
     private lateinit var versionText: TextView
     private lateinit var progressBar: ProgressBar
+    private lateinit var folderPathText: TextView
+
+    private val PERMISSION_REQUEST_CODE = 1001
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +52,9 @@ class MainActivity : AppCompatActivity() {
             modeToggleGroup = findViewById(R.id.modeToggleGroup)
             versionText = findViewById(R.id.versionText)
             progressBar = findViewById(R.id.progressBar)
+            folderPathText = findViewById(R.id.folderPathText)
+
+            folderPathText.text = downloadFolder
 
             modeToggleGroup.check(R.id.audioModeButton)
 
@@ -123,6 +132,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }.start()
             }
+
+            checkAndRequestPermissions()
         } catch (e: Exception) {
             logErrorToFile(e)
             Toast.makeText(this, "App crashed. Check log file in /sdcard/Download.", Toast.LENGTH_LONG).show()
@@ -136,6 +147,7 @@ class MainActivity : AppCompatActivity() {
             if (uri != null) {
                 val path = uri.path ?: return@registerForActivityResult
                 downloadFolder = path.replace("/tree/primary:", "/sdcard/")
+                folderPathText.text = downloadFolder
                 Toast.makeText(this, "Folder selected: $downloadFolder", Toast.LENGTH_SHORT).show()
             }
         }
@@ -151,6 +163,36 @@ class MainActivity : AppCompatActivity() {
             writer.println()
             writer.close()
         } catch (fileException: Exception) {
+        }
+    }
+
+    private fun checkAndRequestPermissions() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            if (!android.provider.Settings.canManageExternalStorage(this)) {
+                Toast.makeText(this, "Please grant Manage External Storage permission", Toast.LENGTH_LONG).show()
+            }
+        } else {
+            val permissions = arrayOf(
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            val missingPermissions = permissions.filter {
+                ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+            }
+            if (missingPermissions.isNotEmpty()) {
+                ActivityCompat.requestPermissions(this, missingPermissions.toTypedArray(), PERMISSION_REQUEST_CODE)
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Permissions denied", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

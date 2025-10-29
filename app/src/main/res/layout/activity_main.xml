@@ -143,14 +143,25 @@
                 <Button
                     android:id="@+id/selectFolderBtn"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="56dp"
                     android:text="Select Download Folder"
                     android:textSize="16sp"
-                    android:layout_marginTop="16dp"
+                    android:textStyle="bold"
                     android:backgroundTint="#4CAF50"
                     android:textColor="#FFFFFF"
+                    app:cornerRadius="12dp"
+                    android:layout_marginTop="16dp"
                     android:elevation="4dp" />
 
+                <TextView
+                    android:id="@+id/folderPathText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="/sdcard/Download"
+                    android:textSize="14sp"
+                    android:textColor="#B0B0B0"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
