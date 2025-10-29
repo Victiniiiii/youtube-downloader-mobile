@@ -176,5 +176,16 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#B0B0B0"
+            android:textSize="14sp"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:visibility="gone" />
+
     </LinearLayout>
 </ScrollView>
